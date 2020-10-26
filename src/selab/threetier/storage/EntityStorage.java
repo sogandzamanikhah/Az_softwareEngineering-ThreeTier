@@ -11,6 +11,7 @@ public class EntityStorage<T extends Entity> {
 
     public int addOrUpdate(T item) {
         int id = item.getId();
+
         if (id == 0) {
             item.setId(++counter);
             id = counter;
@@ -23,8 +24,18 @@ public class EntityStorage<T extends Entity> {
         return id;
     }
 
+
+
+    public int remove(T item){
+        list.remove(item.getId());
+        return item.getId();
+    }
+
     public ArrayList<T> getAll() {
         return new ArrayList<T>(list.values());
+    }
+    public int getsize() {
+        return list.size();
     }
 
     public T get(int id) {

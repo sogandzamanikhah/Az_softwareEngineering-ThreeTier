@@ -4,10 +4,10 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.util.Hashtable;
 
 public abstract class Presentation implements HttpHandler {
@@ -34,6 +34,6 @@ public abstract class Presentation implements HttpHandler {
         os.close();
     }
 
-    public abstract String exec(String method, InputStream body) throws IOException;
+    public abstract String exec(String method, InputStream body) throws IOException, ParseException;
     public abstract Hashtable<String, String> getResponseHeaders();
 }

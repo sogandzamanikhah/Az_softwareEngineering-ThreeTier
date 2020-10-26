@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import selab.threetier.logic.Task ;
+
 
 public class RemoveTaskPresentation extends JSONPresentation {
 
@@ -23,8 +25,19 @@ public class RemoveTaskPresentation extends JSONPresentation {
         JSONObject request = new JSONObject(new BufferedReader(new InputStreamReader(body)).lines().collect(Collectors.joining("\n")));
 
         int id = request.getInt("id");
-
         // TODO: Add codes here to delete a task with the id
-        return null;
+        for (int i = 0; i < Task.getAll().size(); i++) {
+            if(id == Task.getAll().get(i).getId()){
+                Task.getAll().get(i).remove();
+                break;
+            }
+
+        }
+        Map<String, String> result = new HashMap<>();
+        result.put("success", "true");
+        return new JSONObject(result);
+
+
+
     }
 }
