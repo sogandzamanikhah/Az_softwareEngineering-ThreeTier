@@ -3,8 +3,7 @@ package selab.threetier.logic;
 import selab.threetier.storage.Storage;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class Task extends Entity {
     private String title;
@@ -59,12 +58,12 @@ public class Task extends Entity {
             compare3 = endTask.compareTo(start);
             compare4 = endTask.compareTo(end);
 
-            if(!((compare1 == 1 && compare2 ==1) || (compare3 == -1 && compare4 == -1))){
+            if(!((compare1 == 1 && compare2 == 1)||(compare1 == 1 && compare2 == 0)
+                    || (compare3 == -1 && compare4 == -1) ||(compare3 == 0 && compare4 == -1))){
                 valid2 = 0;
             }
 
         }
-
         if(valid1 == 1 && valid2==1){
             valid1 = 0;
             valid2 = 1;
@@ -83,9 +82,23 @@ public class Task extends Entity {
 
     }
 
+    public static Comparator<Task> taskComparator = new Comparator<Task>() {
+
+        public int compare(Task s1, Task s2) {
+            Date start1 = s1.start;
+            Date start2 = s2.start;
+
+            //ascending order
+            return start1.compareTo(start2);
+
+            //descending order
+            //return StudentName2.compareTo(StudentName1);
+        }};
+
 
     public static ArrayList<Task> getAll() {
-
-        return Storage.getInstance().getTasks().getAll();
+        ArrayList<Task> al = Storage.getInstance().getTasks().getAll();
+        Collections.sort(al,Task.taskComparator);
+        return al;
     }
 }
